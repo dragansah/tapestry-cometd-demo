@@ -1,25 +1,18 @@
 <html t:type="layout" title="Stocks"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
 
-	<!-- 
-	<t:loop source="tickers" value="ticker">
-		<div>
-			${ticker}: <t:cometd.push topic="stocks/${ticker}" event="stockPriceReceived" update="REPLACE" />
-		</div>
-	</t:loop>
-	-->
 	<table>
 		<tr>
-			<td>GOOG</td><td><t:cometd.push topic="stocks/GOOG" event="stockPriceReceived" update="REPLACE" /></td>
+			<td>GOOG</td><td><t:cometd.PushTarget topic="stocks/GOOG" event="stockPriceReceived" update="REPLACE" /></td>
 		</tr>
 		<tr>
-			<td>YAHOO</td><td><t:cometd.push topic="stocks/YAHOO" event="stockPriceReceived" update="REPLACE" /></td>
+			<td>YAHOO</td><td><t:cometd.PushTarget topic="stocks/YAHOO" event="stockPriceReceived" update="REPLACE" /></td>
 		</tr>
 		<tr>
-			<td>IBM</td><td><t:cometd.push topic="stocks/IBM" event="stockPriceReceived" update="REPLACE" /></td>
+			<td>IBM</td><td><t:cometd.PushTarget topic="stocks/IBM" event="stockPriceReceived" update="REPLACE" /></td>
 		</tr>
 		<tr>
-			<td>SONY</td><td><t:cometd.push topic="stocks/SONY" event="stockPriceReceived" update="REPLACE" /></td>
+			<td>SONY</td><td><t:cometd.PushTarget topic="stocks/SONY" event="stockPriceReceived" update="REPLACE" /></td>
 		</tr>
 	</table>
 
