@@ -23,6 +23,12 @@
 			<version>0.9</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.got5</groupId>
+			<artifactId>tapestry5-jquery</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
 		<!-- This adds automatic compression of JavaScript and CSS when in production 
 			mode. -->
 		<dependency>
@@ -141,6 +147,14 @@
 		<repository>
 			<id>tapestry-cometd</id>
 			<url>https://github.com/uklance/releases/raw/master</url>
+		</repository>
+
+		<repository>
+			<id>devlab722-repo</id>
+			<url>http://nexus.devlab722.net/nexus/content/repositories/releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 
