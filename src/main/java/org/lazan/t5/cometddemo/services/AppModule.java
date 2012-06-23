@@ -60,7 +60,7 @@ public class AppModule
 			}
 			
 			public String getTopicPattern() {
-				return "chatTopic";
+				return "**";
 			}
 		};
 		config.add("print", auth);
@@ -100,6 +100,6 @@ public class AppModule
     			}
     		}
     	};
-    	//new Thread(runnable).start();
+    	new Thread(runnable).start();
     }
 }
