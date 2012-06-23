@@ -4,9 +4,13 @@ import java.util.Random;
 
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.ioc.MappedConfiguration;
+import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Startup;
+import org.lazan.t5.cometd.ClientContext;
+import org.lazan.t5.cometd.services.Authorizer;
 import org.lazan.t5.cometd.services.PushManager;
+import org.lazan.t5.cometd.services.SubscriptionListener;
 import org.lazan.t5.cometddemo.stocks.StockPrice;
 
 /**
@@ -48,6 +52,36 @@ public class AppModule
         configuration.add(SymbolConstants.SUPPORTED_LOCALES, "en");
     }
     
+    public static void contributeAuthorizers(OrderedConfiguration<Authorizer> config) {
+    	Authorizer auth = new Authorizer() {
+			public boolean isAuthorized(String topic, ClientContext clientContext) {
+				System.err.println(String.format("isAuthorized(%s, %s)", topic, clientContext));
+				return true;
+			}
+			
+			public String getTopicPattern() {
+				return "chatTopic";
+			}
+		};
+		config.add("print", auth);
+    	
+    }
+    
+    public static void contributeSubscriptionListeners(OrderedConfiguration<SubscriptionListener> config) {
+    	SubscriptionListener listener = new SubscriptionListener() {
+    		public String getTopicPattern() {
+    			return "chatTopic";
+    		}
+    		public void onSubscribe(String topic, ClientContext context) {
+    			System.err.println(String.format("onSubscribe(%s, %s)", topic, context));
+    		}
+    		public void onUnsubscribe(String topic, ClientContext context) {
+    			System.err.println(String.format("onUnsubscribe(%s, %s)", topic, context));
+    		}
+    	};
+    	config.add("print", listener);
+    }
+    
     @Startup
     public static void startStockTicker(final PushManager pushManager) {
     	final String[] tickers = { "GOOG", "YAHOO", "IBM", "SONY" };
@@ -66,6 +100,6 @@ public class AppModule
     			}
     		}
     	};
-    	new Thread(runnable).start();
+    	//new Thread(runnable).start();
     }
 }
