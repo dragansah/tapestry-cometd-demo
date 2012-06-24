@@ -1,22 +1,21 @@
 <html t:type="layout" title="Stocks"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
 
+	<h3>Single Subscriptions, update = 'REPLACE'</h3>
 	<table>
-		<tr>
-			<td>GOOG</td><td><t:cometd.PushTarget topic="stocks/GOOG" event="stockPriceReceived" update="REPLACE" /></td>
-		</tr>
-		<tr>
-			<td>YAHOO</td><td><t:cometd.PushTarget topic="stocks/YAHOO" event="stockPriceReceived" update="REPLACE" /></td>
-		</tr>
-		<tr>
-			<td>IBM</td><td><t:cometd.PushTarget topic="stocks/IBM" event="stockPriceReceived" update="REPLACE" /></td>
-		</tr>
-		<tr>
-			<td>SONY</td><td><t:cometd.PushTarget topic="stocks/SONY" event="stockPriceReceived" update="REPLACE" /></td>
-		</tr>
+		<t:loop source="tickers" value="ticker">
+			<tr>
+				<td>topic = '${topic}'</td><td><t:cometd.PushTarget topic="prop:topic" event="stockPriceReceived" update="REPLACE">Waiting ...</t:cometd.PushTarget></td>
+			</tr>
+		</t:loop>
 	</table>
-
 	<t:block t:id="stockPriceBlock">
 		<font color="red">${stockPrice.price}</font>
+	</t:block>
+	<hr />
+	<h3>Wildcard Subscription, topic = 'stocks/**' update = 'PREPEND'</h3>
+	<t:cometd.PushTarget topic="stocks/**" event="updateList" update="PREPEND" element="ul" />
+	<t:block t:id="listBlock">
+		<li>${stockPrice.ticker} = ${stockPrice.price}</li>
 	</t:block>
 </html>

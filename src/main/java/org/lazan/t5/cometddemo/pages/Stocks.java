@@ -15,6 +15,10 @@ public class Stocks {
 	@Inject
 	private Block stockPriceBlock;
 	
+	@Inject
+	private Block listBlock;
+	
+	
 	@Property
 	private String ticker;
 	
@@ -22,8 +26,17 @@ public class Stocks {
 		return TICKERS;
 	}
 	
+	public String getTopic() {
+		return "stocks/" + ticker;
+	}
+	
 	public Block onStockPriceReceived(StockPrice stockPrice) {
 		this.stockPrice = stockPrice;
 		return stockPriceBlock;
+	}
+
+	public Block onUpdateList(StockPrice stockPrice) {
+		this.stockPrice = stockPrice;
+		return listBlock;
 	}
 }
