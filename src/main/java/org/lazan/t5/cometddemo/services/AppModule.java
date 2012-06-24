@@ -55,7 +55,7 @@ public class AppModule
     public static void contributeAuthorizers(OrderedConfiguration<Authorizer> config) {
     	Authorizer auth = new Authorizer() {
 			public boolean isAuthorized(String topic, ClientContext clientContext) {
-				System.err.println(String.format("isAuthorized(%s, %s)", topic, clientContext));
+				System.err.println(String.format("isAuthorized(%s, %s)", topic, clientContext.getTopic()));
 				return true;
 			}
 			
@@ -70,13 +70,13 @@ public class AppModule
     public static void contributeSubscriptionListeners(OrderedConfiguration<SubscriptionListener> config) {
     	SubscriptionListener listener = new SubscriptionListener() {
     		public String getTopicPattern() {
-    			return "chatTopic";
+    			return "**";
     		}
     		public void onSubscribe(String topic, ClientContext context) {
-    			System.err.println(String.format("onSubscribe(%s, %s)", topic, context));
+    			System.err.println(String.format("onSubscribe(%s, %s)", topic, context.getTopic()));
     		}
     		public void onUnsubscribe(String topic, ClientContext context) {
-    			System.err.println(String.format("onUnsubscribe(%s, %s)", topic, context));
+    			System.err.println(String.format("onUnsubscribe(%s, %s)", topic, context.getTopic()));
     		}
     	};
     	config.add("print", listener);

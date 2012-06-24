@@ -5,7 +5,7 @@
 	<table>
 		<t:loop source="tickers" value="ticker">
 			<tr>
-				<td>topic = '${topic}'</td><td><t:cometd.PushTarget topic="prop:topic" event="stockPriceReceived" update="REPLACE">Waiting ...</t:cometd.PushTarget></td>
+				<td>topic = '${topic}'</td><td><t:cometd.PushTarget topic="prop:topic" event="stockPriceReceived" update="replace">Waiting ...</t:cometd.PushTarget></td>
 			</tr>
 		</t:loop>
 	</table>
@@ -14,7 +14,7 @@
 	</t:block>
 	<hr />
 	<h3>Wildcard Subscription, topic = 'stocks/**' update = 'PREPEND'</h3>
-	<t:cometd.PushTarget topic="stocks/**" event="updateList" update="PREPEND" element="ul" />
+	<t:cometd.PushTarget topic="stocks/**" event="updateList" update="prepend" element="ul" />
 	<t:block t:id="listBlock">
 		<li>${stockPrice.ticker} = ${stockPrice.price}</li>
 	</t:block>
