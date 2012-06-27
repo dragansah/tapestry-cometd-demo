@@ -60,17 +60,16 @@ public class AppModule
 			}
 			
 			public String getTopicPattern() {
-				return "**";
+				return "/**";
 			}
 		};
 		config.add("print", auth);
-    	
     }
     
     public static void contributeSubscriptionListeners(OrderedConfiguration<SubscriptionListener> config) {
     	SubscriptionListener listener = new SubscriptionListener() {
     		public String getTopicPattern() {
-    			return "**";
+    			return "/**";
     		}
     		public void onSubscribe(ClientContext context) {
     			System.err.println(String.format("onSubscribe(%s)", context.getTopic()));
@@ -92,7 +91,7 @@ public class AppModule
 	    			String ticker = tickers[random.nextInt(tickers.length)];
 	    			double price = random.nextInt(10000) / 100D;
 	    			
-	    			String topic = "stocks/" + ticker;
+	    			String topic = "/stocks/" + ticker;
 	    			pushManager.broadcast(topic, new StockPrice(ticker, price));
 	        		try {
 	    				Thread.sleep(1000);

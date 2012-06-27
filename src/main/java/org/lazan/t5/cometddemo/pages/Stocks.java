@@ -27,7 +27,7 @@ public class Stocks {
 	}
 	
 	public String getTopic() {
-		return "stocks/" + ticker;
+		return "/stocks/" + ticker;
 	}
 	
 	public Block onStockPriceReceived(StockPrice stockPrice) {

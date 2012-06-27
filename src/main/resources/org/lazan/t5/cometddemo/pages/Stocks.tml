@@ -1,7 +1,7 @@
 <html t:type="layout" title="Stocks"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
 
-	<h3>Single Subscriptions, update = 'REPLACE'</h3>
+	<h3>Single Subscriptions, update = 'replace'</h3>
 	<table>
 		<t:loop source="tickers" value="ticker">
 			<tr>
@@ -13,8 +13,8 @@
 		<font color="red">${stockPrice.price}</font>
 	</t:block>
 	<hr />
-	<h3>Wildcard Subscription, topic = 'stocks/**' update = 'PREPEND'</h3>
-	<t:cometd.PushTarget topic="stocks/**" event="updateList" update="prepend" element="ul" />
+	<h3>Wildcard Subscription, topic = '/stocks/**' update = 'prepend'</h3>
+	<t:cometd.PushTarget topic="/stocks/**" event="updateList" update="prepend" element="ul" />
 	<t:block t:id="listBlock">
 		<li>${stockPrice.ticker} = ${stockPrice.price}</li>
 	</t:block>
