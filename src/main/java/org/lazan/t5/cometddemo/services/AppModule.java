@@ -7,9 +7,9 @@ import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Startup;
-import org.lazan.t5.cometd.ClientContext;
 import org.lazan.t5.cometd.services.Authorizer;
 import org.lazan.t5.cometd.services.PushManager;
+import org.lazan.t5.cometd.services.PushSession;
 import org.lazan.t5.cometd.services.SubscriptionListener;
 import org.lazan.t5.cometddemo.stocks.StockPrice;
 
@@ -57,8 +57,8 @@ public class AppModule
 			public String getTopic() {
 				return "/**";
 			}
-			public boolean isAuthorized(ClientContext clientContext) {
-				System.err.println(String.format("isAuthorized(%s)", clientContext.getTopic()));
+			public boolean isAuthorized(PushSession pushSession) {
+				System.err.println(String.format("isAuthorized(%s)", pushSession.getTopic()));
 				return true;
 			}
 		};
@@ -70,11 +70,11 @@ public class AppModule
     		public String getTopic() {
     			return "/**";
     		}
-    		public void onSubscribe(ClientContext context) {
-    			System.err.println(String.format("onSubscribe(%s)", context.getTopic()));
+    		public void onSubscribe(PushSession pushSession) {
+    			System.err.println(String.format("onSubscribe(%s)", pushSession.getTopic()));
     		}
-    		public void onUnsubscribe(ClientContext context) {
-    			System.err.println(String.format("onUnsubscribe(%s)", context.getTopic()));
+    		public void onUnsubscribe(PushSession pushSession) {
+    			System.err.println(String.format("onUnsubscribe(%s)", pushSession.getTopic()));
     		}
     	};
     	config.add("print", listener);
