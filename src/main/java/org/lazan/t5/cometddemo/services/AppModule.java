@@ -8,9 +8,11 @@ import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Startup;
 import org.lazan.t5.cometd.services.Authorizer;
+import org.lazan.t5.cometd.services.AuthorizerContribution;
 import org.lazan.t5.cometd.services.PushManager;
 import org.lazan.t5.cometd.services.PushSession;
 import org.lazan.t5.cometd.services.SubscriptionListener;
+import org.lazan.t5.cometd.services.SubscriptionListenerContribution;
 import org.lazan.t5.cometddemo.stocks.StockPrice;
 
 /**
@@ -52,24 +54,19 @@ public class AppModule
         configuration.add(SymbolConstants.SUPPORTED_LOCALES, "en");
     }
     
-    public static void contributeAuthorizers(OrderedConfiguration<Authorizer> config) {
-    	Authorizer auth = new Authorizer() {
-			public String getTopic() {
-				return "/**";
-			}
+    public static void contributeAuthorizers(OrderedConfiguration<AuthorizerContribution> config) {
+    	Authorizer authorizer = new Authorizer() {
 			public boolean isAuthorized(PushSession pushSession) {
 				System.err.println(String.format("isAuthorized(%s)", pushSession.getTopic()));
 				return true;
 			}
 		};
-		config.add("print", auth);
+		AuthorizerContribution contribution = new AuthorizerContribution("/**", authorizer);
+		config.add("print", contribution);
     }
     
-    public static void contributeSubscriptionListeners(OrderedConfiguration<SubscriptionListener> config) {
+    public static void contributeSubscriptionListeners(OrderedConfiguration<SubscriptionListenerContribution> config) {
     	SubscriptionListener listener = new SubscriptionListener() {
-    		public String getTopic() {
-    			return "/**";
-    		}
     		public void onSubscribe(PushSession pushSession) {
     			System.err.println(String.format("onSubscribe(%s)", pushSession.getTopic()));
     		}
@@ -77,7 +74,8 @@ public class AppModule
     			System.err.println(String.format("onUnsubscribe(%s)", pushSession.getTopic()));
     		}
     	};
-    	config.add("print", listener);
+    	SubscriptionListenerContribution contribution = new SubscriptionListenerContribution("/**", listener);
+    	config.add("print", contribution);
     }
     
     @Startup
